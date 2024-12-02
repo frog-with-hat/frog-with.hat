@@ -13,8 +13,9 @@ const TOKEN_MINT_ADDRESS = "5iG1EEbzz2z3PWUfzPMR5kzRcX1SuXzehsU7TL3YRrCB";
 let walletAddress = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    if (!window.solana) {
-        alert('Please install a Solana wallet like Phantom.');
+    // Überprüfen, ob ein Solana-Wallet installiert ist
+    if (!window.solana || !window.solana.isPhantom) {
+        alert('Please install a Solana wallet like Phantom to use this dApp.');
         return;
     }
 
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await window.solana.connect({ onlyIfTrusted: false });
             walletAddress = response.publicKey.toString();
+            console.log(`Wallet connected: ${walletAddress}`);
             alert(`Wallet connected: ${walletAddress}`);
         } catch (err) {
             console.error("Failed to connect wallet:", err);
@@ -48,12 +50,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const toPublicKey = new solanaWeb3.PublicKey(SELLER_WALLET);
             const lamports = Math.floor(parseFloat(amount) * solanaWeb3.LAMPORTS_PER_SOL);
 
-            const latestBlockhash = await connection.getLatestBlockhash();
+            console.log(`Preparing transaction of ${lamports} lamports...`);
+
+            // Neuesten Blockhash abrufen
+            const latestBlockhashInfo = await connection.getLatestBlockhash();
             const transaction = new solanaWeb3.Transaction({
                 feePayer: fromPublicKey,
-                recentBlockhash: latestBlockhash.blockhash,
+                recentBlockhash: latestBlockhashInfo.blockhash, // Extrahieren des Blockhash
             });
 
+            // Überweisungsanweisung hinzufügen
             const transferInstruction = solanaWeb3.SystemProgram.transfer({
                 fromPubkey: fromPublicKey,
                 toPubkey: toPublicKey,
@@ -62,14 +68,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             transaction.add(transferInstruction);
 
+            // Transaktion signieren und senden
             const signedTransaction = await window.solana.signTransaction(transaction);
             const signature = await connection.sendRawTransaction(signedTransaction.serialize());
-
+            console.log(`Transaction successful! Signature: ${signature}`);
             alert(`SOL Transaction successful! Signature: ${signature}`);
         } catch (err) {
-            alert(`Transaction failed: ${err.message}`);
             console.error("Transaction failed:", err);
+            alert(`Transaction failed: ${err.message}`);
         }
     });
 });
+
 
