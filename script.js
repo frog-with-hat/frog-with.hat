@@ -1,4 +1,4 @@
-// Solana Connection
+// Verbindet mit dem Solana Devnet
 const connection = new solanaWeb3.Connection(
     solanaWeb3.clusterApiUrl('devnet'),
     'confirmed'
@@ -12,8 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // Connect Wallet Button
-    document.getElementById("connect-wallet").addEventListener("click", async () => {
+    // Wallet verbinden
+    const connectButton = document.getElementById("connect-wallet");
+    connectButton.addEventListener("click", async () => {
         try {
             const response = await window.solana.connect({ onlyIfTrusted: false });
             walletAddress = response.publicKey.toString();
@@ -21,12 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(`Wallet connected: ${walletAddress}`);
         } catch (err) {
             console.error("Failed to connect wallet:", err);
-            alert("Failed to connect wallet. Please try again.");
+            alert("Wallet connection failed. Please try again.");
         }
     });
 
-    // Buy Token Button
-    document.getElementById("buy-token").addEventListener("click", async () => {
+    // Token kaufen
+    const buyButton = document.getElementById("buy-token");
+    buyButton.addEventListener("click", async () => {
         if (!walletAddress) {
             alert("Please connect your wallet first!");
             console.error("No wallet connected.");
@@ -64,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             transaction.add(transferInstruction);
+
             const signedTransaction = await window.solana.signTransaction(transaction);
             const signature = await connection.sendRawTransaction(signedTransaction.serialize(), {
                 skipPreflight: false,
@@ -75,3 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
             alert(`Transaction failed: ${err.message}`);
             console.error("Transaction failed:", err);
         }
+    });
+});
+
