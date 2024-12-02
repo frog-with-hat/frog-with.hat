@@ -1,13 +1,14 @@
-// Verbindung zum Solana mainnet herstellen
+// Verbindung zur Solana Blockchain mit Ankr RPC
 const connection = new solanaWeb3.Connection(
-    solanaWeb3.clusterApiUrl('mainnet-beta'),
+    "https://rpc.ankr.com/solana",
     'confirmed'
 );
 
-// Deine Token Mint-Adresse
-const TOKEN_MINT_ADDRESS = "5iG1EEbzz2z3PWUfzPMR5kzRcX1SuXzehsU7TL3YRrCB";
 // Verkäufer-Wallet-Adresse
 const SELLER_WALLET = "4miKFSQZysmvRR6PnqQB8HzybCg1ZoF6QKaocbdtnXHs";
+
+// Deine Token Mint-Adresse
+const TOKEN_MINT_ADDRESS = "5iG1EEbzz2z3PWUfzPMR5kzRcX1SuXzehsU7TL3YRrCB";
 
 let walletAddress = null;
 
