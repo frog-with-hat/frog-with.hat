@@ -1,4 +1,4 @@
-// Verbindet mit dem Solana Devnet
+// Verbindung zum Solana Devnet herstellen
 const connection = new solanaWeb3.Connection(
     solanaWeb3.clusterApiUrl('devnet'),
     'confirmed'
