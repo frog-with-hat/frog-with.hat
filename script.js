@@ -1,6 +1,6 @@
-// Verbindung zum Solana Devnet herstellen
+// Verbindung zum Solana mainnet herstellen
 const connection = new solanaWeb3.Connection(
-    solanaWeb3.clusterApiUrl('devnet'),
+    solanaWeb3.clusterApiUrl('mainnet-beta'),
     'confirmed'
 );
 
