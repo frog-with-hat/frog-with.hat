@@ -7,7 +7,7 @@ const connection = new solanaWeb3.Connection(
 // Verkäufer-Wallet-Adresse
 const SELLER_WALLET = "4miKFSQZysmvRR6PnqQB8HzybCg1ZoF6QKaocbdtnXHs";
 
-// Deine Token Mint-Adresse
+// Token Mint-Adresse (falls benötigt)
 const TOKEN_MINT_ADDRESS = "5iG1EEbzz2z3PWUfzPMR5kzRcX1SuXzehsU7TL3YRrCB";
 
 let walletAddress = null;
@@ -52,11 +52,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             console.log(`Preparing transaction of ${lamports} lamports...`);
 
-            // Neuesten Blockhash abrufen
-            const latestBlockhashInfo = await connection.getLatestBlockhash();
+            // Neuesten Blockhash mit getRecentBlockhash abrufen
+            const { blockhash } = await connection.getRecentBlockhash('finalized');
             const transaction = new solanaWeb3.Transaction({
                 feePayer: fromPublicKey,
-                recentBlockhash: latestBlockhashInfo.blockhash, // Extrahieren des Blockhash
+                recentBlockhash: blockhash, // Blockhash korrekt extrahieren
             });
 
             // Überweisungsanweisung hinzufügen
