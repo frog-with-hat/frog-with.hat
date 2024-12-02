@@ -1,6 +1,6 @@
-// Verbindung zur Solana Blockchain (Mainnet)
+// Verbindung zur Solana Blockchain mit Ankr RPC
 const connection = new solanaWeb3.Connection(
-    solanaWeb3.clusterApiUrl('mainnet-beta'), // Verbindung mit dem Mainnet
+    "https://rpc.ankr.com/solana", // Ankr Mainnet RPC-Endpunkt
     'confirmed'
 );
 
@@ -13,7 +13,6 @@ const TOKEN_MINT_ADDRESS = "5iG1EEbzz2z3PWUfzPMR5kzRcX1SuXzehsU7TL3YRrCB";
 let walletAddress = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Überprüfen, ob ein Solana-Wallet installiert ist
     if (!window.solana || !window.solana.isPhantom) {
         alert('Please install a Solana wallet like Phantom to use this dApp.');
         return;
@@ -52,16 +51,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             console.log(`Preparing transaction of ${lamports} lamports...`);
 
-            // Blockhash abrufen
-            const latestBlockhashInfo = await connection.getLatestBlockhash();
-            console.log("Latest Blockhash Info:", latestBlockhashInfo);
+            const { blockhash } = await connection.getRecentBlockhash('finalized');
+            console.log("Blockhash:", blockhash);
 
             const transaction = new solanaWeb3.Transaction({
                 feePayer: fromPublicKey,
-                recentBlockhash: latestBlockhashInfo.blockhash, // Blockhash korrekt extrahieren
+                recentBlockhash: blockhash,
             });
 
-            // Überweisungsanweisung hinzufügen
             const transferInstruction = solanaWeb3.SystemProgram.transfer({
                 fromPubkey: fromPublicKey,
                 toPubkey: toPublicKey,
@@ -70,7 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             transaction.add(transferInstruction);
 
-            // Transaktion signieren und senden
             const signedTransaction = await window.solana.signTransaction(transaction);
             const signature = await connection.sendRawTransaction(signedTransaction.serialize());
             console.log(`Transaction successful! Signature: ${signature}`);
@@ -81,6 +77,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-
-
-
