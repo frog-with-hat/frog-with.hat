@@ -10,7 +10,10 @@
     <script src="https://cdn.jsdelivr.net/npm/buffer@6.0.3/index.min.js"></script>
     <script>
         // Buffer-Initialisierung erzwingen
-        window.Buffer = window.Buffer || require('buffer').Buffer || buffer.Buffer;
+        if (!window.Buffer) {
+            const buffer = require('buffer');
+            window.Buffer = buffer.Buffer;
+        }
     </script>
     <!-- Dein eigenes JavaScript -->
     <script defer src="script.js"></script>
