@@ -7,12 +7,20 @@
     <!-- Solana Web3.js Bibliothek -->
     <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
     <!-- Buffer Polyfill -->
-    <script src="https://cdn.jsdelivr.net/npm/buffer@6.0.3/index.min.js"></script>
     <script>
-        // Buffer-Initialisierung erzwingen
+        // Einfacher Polyfill für Buffer
         if (!window.Buffer) {
-            const buffer = require('buffer');
-            window.Buffer = buffer.Buffer;
+            window.Buffer = {
+                from: (input, encoding) => {
+                    if (encoding === "hex") {
+                        return Uint8Array.from(
+                            input.match(/.{1,2}/g).map((byte) => parseInt(byte, 16))
+                        );
+                    } else {
+                        return new TextEncoder().encode(input);
+                    }
+                },
+            };
         }
     </script>
     <!-- Dein eigenes JavaScript -->
