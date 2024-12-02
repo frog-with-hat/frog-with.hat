@@ -1,0 +1,122 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('Frogwifhat.png') no-repeat center center fixed;
+    background-size: cover;
+    color: #00ff00;
+    text-align: center;
+}
+
+/* Header */
+header {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    color: lime;
+}
+
+.header-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin: 10px auto;
+    display: block;
+    box-shadow: 0 0 15px lime;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin: 10px 0;
+}
+
+header p {
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+/* Buttons */
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: lime;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: darkgreen;
+    color: white;
+}
+
+/* Input */
+input {
+    padding: 10px;
+    margin: 10px;
+    border: 2px solid lime;
+    border-radius: 5px;
+    background-color: black;
+    color: lime;
+    text-align: center;
+}
+
+/* Wallet Address Section */
+#wallet-address {
+    font-size: 1.2rem;
+    color: white;
+    margin-top: 10px;
+    word-wrap: break-word;
+    padding: 10px;
+    border: 1px solid lime;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: inline-block;
+    text-align: center;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Social Buttons */
+.social-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: lime;
+    color: black;
+    border: 2px solid lime;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.social-button:hover {
+    background-color: darkgreen;
+    color: white;
+    border-color: darkgreen;
+}
+
+/* Disclaimer Section */
+#disclaimer {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: rgba(255, 0, 0, 0.1);
+    color: red;
+    border: 2px solid red;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 0 10px red;
+}
+
+/* Footer */
+footer {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: lime;
+    font-size: 0.9rem;
+}
