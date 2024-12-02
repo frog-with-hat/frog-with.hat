@@ -1,6 +1,6 @@
 // Verbindung zur Solana Blockchain (Mainnet)
 const connection = new solanaWeb3.Connection(
-    solanaWeb3.clusterApiUrl('mainnet-beta'), // Verbindung zum Mainnet
+    solanaWeb3.clusterApiUrl('mainnet-beta'), // Verbindung mit dem Mainnet
     'confirmed'
 );
 
@@ -52,11 +52,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             console.log(`Preparing transaction of ${lamports} lamports...`);
 
-            // Neuesten Blockhash abrufen
-            const latestBlockhash = await connection.getLatestBlockhash();
+            // Blockhash abrufen
+            const latestBlockhashInfo = await connection.getLatestBlockhash();
+            console.log("Latest Blockhash Info:", latestBlockhashInfo);
+
             const transaction = new solanaWeb3.Transaction({
                 feePayer: fromPublicKey,
-                recentBlockhash: latestBlockhash.blockhash, // Blockhash korrekt extrahieren
+                recentBlockhash: latestBlockhashInfo.blockhash, // Blockhash korrekt extrahieren
             });
 
             // Überweisungsanweisung hinzufügen
